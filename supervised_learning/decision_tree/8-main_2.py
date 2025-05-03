@@ -1,4 +1,6 @@
-ion_Tree = __import__('8-build_decision_tree').Decision_Tree
+#!/usr/bin/env python3
+
+Decision_Tree = __import__('8-build_decision_tree').Decision_Tree
 import numpy as np
 import matplotlib.pyplot as plt
 

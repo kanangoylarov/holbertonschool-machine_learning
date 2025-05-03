@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 
-de = __import__('2-build_decision_tree').Node
+Node = __import__('2-build_decision_tree').Node
 Leaf = __import__('2-build_decision_tree').Leaf
 Decision_Tree = __import__('2-build_decision_tree').Decision_Tree
 

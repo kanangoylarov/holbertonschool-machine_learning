@@ -1,6 +1,6 @@
-solation_Random_Forest = __import__('11-isolation_forest').Isolation_Random_Forest
+#!/usr/bin/env python3
 
-import numpy as np
+Isolation_Random_Forest = __import__('11-isolation_forest').Isolation_Random_Forest
 import matplotlib.pyplot as plt
 
 #                                     #########################

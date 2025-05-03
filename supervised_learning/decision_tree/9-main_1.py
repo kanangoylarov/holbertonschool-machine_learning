@@ -1,4 +1,6 @@
-andom_Forest = __import__('9-random_forest').Random_Forest
+#!/usr/bin/env python3
+
+Random_Forest = __import__('9-random_forest').Random_Forest
 import numpy as np
 from sklearn import datasets
 
