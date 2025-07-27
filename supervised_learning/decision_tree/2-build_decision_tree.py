@@ -17,6 +17,17 @@ class Node:
 
             ####### FILL IN THIS METHOD
 
+    def __str__(self):
+        if self.is_root:
+            prefix = "root"
+        else:
+            prefix = "node"
+
+        result = f"{prefix} [feature={self.feature}, threshold={self.threshold}]\n"
+        result += left_child_add_prefix(self.left_child.__str__())
+        result += right_child_add_prefix(self.right_child.__str__())
+        return result
+
 class Leaf(Node):
     def __init__(self, value, depth=None):
         super().__init__()
@@ -49,3 +60,19 @@ class Decision_Tree():
 
     def __str__(self):
         return self.root.__str__()
+
+
+ def left_child_add_prefix(text):
+    lines = text.split("\n")
+    new_text = "    +---> " + lines[0] + "\n"
+    for x in lines[1:]:
+        new_text += "    |      " + x + "\n"
+    return new_text
+
+
+ def right_child_add_prefix(text):
+    lines = text.split("\n")
+    new_text = "    +---> " + lines[0] + "\n"
+    for x in lines[1:]:
+        new_text += "           " + x + "\n"
+    return new_text
