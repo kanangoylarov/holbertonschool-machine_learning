@@ -1,19 +1,32 @@
 #!/usr/bin/env python3
-
-'''
-This module fills data
-'''
+"""
+9-fill.py
+"""
 
 
 def fill(df):
-    '''
-    This fumction does same thing like above
-    '''
-    df.drop('Weighted_Price', axis=1)
-    df['Close'].fillna(method='pad')
-    df['High'] = df['High'].fillna(df['Close'])
-    df['Low'] = df['Low'].fillna(df['Close'])
-    df['Open'] = df['Open'].fillna(df['Close'])
-    df['Volume_(BTC)'].fillna(0)
-    df['Volume_(Currency)'].fillna(0)
-    return d
+    """
+    Removes the 'Weighted_Price' column and fills missing values:
+    - 'Close': forward fill (previous row's value)
+    - 'High', 'Low', 'Open': filled with the row's 'Close'
+    - 'Volume_(BTC)', 'Volume_(Currency)': filled with 0
+
+    Returns the modified DataFrame.
+    """
+
+    if 'Weighted_Price' in df.columns:
+        df = df.drop(columns=['Weighted_Price'])
+
+
+    df['Close'] = df['Close'].fillna(method='ffill')
+
+
+    for col in ['High', 'Low', 'Open']:
+        if col in df.columns:
+            df[col] = df[col].fillna(df['Close'])
+
+    for col in ['Volume_(BTC)', 'Volume_(Currency)']:
+        if col in df.columns:
+            df[col] = df[col].fillna(0)
+
+    return df
