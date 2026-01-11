@@ -9,6 +9,7 @@ def from_numpy(array):
     '''
     Creating function for process
     '''
+
     order = [char(i) for i in range(ord('A'), ord('Z') + 1)]
-    df = pd.DataFrame(array, columns=orders[:array.shape[1]])
+    df = pd.DataFrame(array, columns=order[:array.shape[1]])
     return df
