@@ -1,4 +1,4 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 
 '''
 This is creating pandas dataframe from numpy array function file
