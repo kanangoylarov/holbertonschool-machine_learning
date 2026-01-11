@@ -17,9 +17,7 @@ def fill(df):
     if 'Weighted_Price' in df.columns:
         df = df.drop(columns=['Weighted_Price'])
 
-
     df['Close'] = df['Close'].fillna(method='ffill')
-
 
     for col in ['High', 'Low', 'Open']:
         if col in df.columns:
