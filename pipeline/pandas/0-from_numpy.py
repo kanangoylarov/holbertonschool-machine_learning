@@ -11,5 +11,5 @@ def from_numpy(array):
     '''
 
     order = [char(i) for i in range(ord('A'), ord('Z') + 1)]
-    df = pd.DataFrame(array, columns=order[:array.shape[1]])
+    df = pd.DataFrame(array, columns = order[:array.shape[1]])
     return df
