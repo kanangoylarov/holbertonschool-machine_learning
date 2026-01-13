@@ -8,4 +8,7 @@ def summation_i_squared(n):
     """
     thsi is my function
     """
-    return n*(n + 1)*(2*n + 1)
+    if type(n) == int:
+        return n*(n + 1)*(2*n + 1)
+    else:
+        return None
