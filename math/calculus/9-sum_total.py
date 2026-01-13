@@ -4,6 +4,7 @@
 this is doc for task nine
 """
 
+
 def summation_i_squared(n):
     """
     this is my function
