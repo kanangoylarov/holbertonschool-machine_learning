@@ -9,7 +9,7 @@ def poly_integral(poly, C=0):
         return None
     if not isinstance(C, int):
         return None
-     integral = [C]  # Start with the integration constant
+    integral = [C]  # Start with the integration constant
 
     # Integrate each coefficient
     for power, coef in enumerate(poly):
