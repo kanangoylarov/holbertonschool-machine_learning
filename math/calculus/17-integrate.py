@@ -3,9 +3,15 @@
 This is my doc
 """
 
+
 def poly_integral(poly, C=0):
     """This is function doc"""
-    if not isinstance(poly, list) or not all(isinstance(coef, (int, float)) for coef in poly):
+    try:
+        if not all(isinstance(coef, (int, float)) for coef in poly):
+            return None
+    except TypeError:
+        return None
+
         return None
     if not isinstance(C, int):
         return None
