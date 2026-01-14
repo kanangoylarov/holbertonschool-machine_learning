@@ -9,7 +9,7 @@ def poly_integral(poly, C=0):
         return None
     if not isinstance(C, int):
         return None
-    if len(poly) == 0 or all(coef == 0 for coef in poly):
+    if len(poly) == 0:
         return [C] if C != 0 else None
     integral = [C]  # Start with the integration constant
 
