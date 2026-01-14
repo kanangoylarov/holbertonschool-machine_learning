@@ -5,12 +5,12 @@ this is my function doc for entry
 
 
 def poly_derivative(poly):
-    """Return the derivative of a polynomial represented as a list of coefficients."""
-    
+    """Return the derivative of a polynomial"""
+
     # Validate input
     if not isinstance(poly, list) or len(poly) == 0:
         return None
-    
+
     for coef in poly:
         if not isinstance(coef, (int, float)):
             return None
