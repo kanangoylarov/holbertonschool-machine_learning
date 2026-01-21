@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""docs"""
+"""docs for my function"""
 
 
 def matrix_transpose(matrix):
@@ -9,6 +9,7 @@ def matrix_transpose(matrix):
     cols = len(matrix[0])
 
     for i in range(cols):
+        """loop for cols"""
         new = []
         new = [matrix[j][i] for j in range(rows)]
         tras.append(new)
