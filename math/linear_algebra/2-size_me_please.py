@@ -1,4 +1,4 @@
-#!/usr/bin/bash/env python3
+#!/usr/bin/env python3
 """docs"""
 def matrix_shape(matrix):
     """doc"""
