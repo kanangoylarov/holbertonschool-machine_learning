@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """docs"""
+
+
 new = []
 def add_arrays(arr1, arr2):
     """addition of array"""
@@ -7,5 +9,6 @@ def add_arrays(arr1, arr2):
         return None
     else:
         for i in range(len(arr1)):
+            """loop for new"""
             new.append(arr1[i] + arr2[i])
     return new
