@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """docs"""
 
+
 def matrix_transpose(matrix):
     """Return the transpose of a matrix"""
     tras = []
