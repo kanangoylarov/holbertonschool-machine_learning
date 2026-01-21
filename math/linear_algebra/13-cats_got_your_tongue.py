@@ -6,5 +6,5 @@ import numpy as np
 
 
 def np_cat(mat1, mat2, axis=0):
-        """Needs a matrix as input Returns the resulting matr"""
+    """Needs a matrix as input Returns the resulting matr"""
         return np.concatenate((mat1, mat2), axis=axis)
