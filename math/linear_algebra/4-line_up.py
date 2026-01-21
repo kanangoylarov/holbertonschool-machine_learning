@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""docs"""
+"""docs of the file"""
 new = []
 
 
