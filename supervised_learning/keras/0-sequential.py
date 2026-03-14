@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
 
 '''
-documented
+Documented
 '''
-import tensorflow.keras as k
+import tensorflow.keras as K
 
-def build_model(nx, layers, activation, lambtha, keep_prob):
+
+def build_model(nx, layers, activations, lambtha, keep_prob):
     '''
-    doc
+    Doc
     '''
-    model = [k.layers.Input(shape=(nx,))]
-    for n, act in zip(layers, activation):
-        model.append(k.layers.Dense(n, activation=act,
-        kernel_regularizer=k.regularizers.l2(lambtha)))
-        model.append(k.layers.Dropout(1 - keep_prob))
-        model.pop()
-    return k.Sequential(model)
+    model = [K.layers.Input(shape=(nx,))]
+    for n, act in zip(layers, activations):
+        model.append(
+                K.layers.Dense(
+                    n,
+                    activation=act,
+                    kernel_regularizer=K.regularizers.l2(lambtha)
+                )
+        )
+        model.append(K.layers.Dropout(rate=1-keep_prob))
+
+    model.pop()
+    return K.Sequential(model)
