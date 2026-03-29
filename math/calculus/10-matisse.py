@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
-"""
-this is my function doc for entry
-"""
+
+'''
+This module calc the derivative of poly
+'''
 
 
 def poly_derivative(poly):
-    """Return the derivative of a polynomial"""
-
-    # Validate input
-    if not isinstance(poly, list) or len(poly) == 0:
+    '''
+    Does same thing as above
+    '''
+    if not isinstance(poly, list):
+        return None
+    if not all(isinstance(c, (int, float)) for c in poly):
+        return None
+    if len(poly) == 0:
         return None
 
-    for coef in poly:
-        if not isinstance(coef, (int, float)):
-            return None
-
-    # Compute derivative
-    result = []
+    poly_der = []
     for i in range(1, len(poly)):
-        result.append(poly[i] * i)
+        poly_der.append(i * poly[i])
 
-    # If derivative is zero
-    if len(result) == 0 or all(coef == 0 for coef in result):
+    if len(poly_der) == 0:
         return [0]
-
-    return result
+    return poly_der

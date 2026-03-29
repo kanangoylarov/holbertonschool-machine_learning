@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""
-7-high.py
-"""
+
+'''
+This module fills data
+'''
 
 
-def high(df):
-    """
-    Sorts the DataFrame by the 'High' column in descending order.
-
-    Args:
-        df (pd.DataFrame): The input DataFrame.
-
-    Returns:
-        pd.DataFrame: The DataFrame sorted by High (highest first).
-    """
-    return df.sort_values(by='High', ascending=False)
+def fill(df):
+    '''
+    This fumction does same thing like above
+    '''
+    df.drop('Weighted_Price', axis=1)
+    df['Close'].fillna(method='pad')
+    df['High'] = df['High'].fillna(df['Close'])
+    df['Low'] = df['Low'].fillna(df['Close'])
+    df['Open'] = df['Open'].fillna(df['Close'])
+    df['Volume_(BTC)'].fillna(0)
+    df['Volume_(Currency)'].fillna(0)
+    return df

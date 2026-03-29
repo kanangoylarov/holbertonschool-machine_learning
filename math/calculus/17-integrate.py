@@ -1,34 +1,32 @@
 #!/usr/bin/env python3
-"""
-This is my doc
-"""
+
+'''
+This module calc the integral of poly
+'''
 
 
 def poly_integral(poly, C=0):
-    """This is function doc"""
-    try:
-        if not all(isinstance(coef, (int, float)) for coef in poly):
-            return None
-    except TypeError:
+    '''
+    Does same thing as above
+    '''
+    if not isinstance(poly, list):
         return None
-
-        return None
-    if not isinstance(C, int):
+    if not all(isinstance(c, (int, float)) for c in poly):
         return None
     if len(poly) == 0:
         return [C] if C != 0 else None
-    integral = [C]  # Start with the integration constant
+    if not isinstance(C, (int, float)):
+        return None
 
-    # Integrate each coefficient
-    for power, coef in enumerate(poly):
-        new_coef = coef / (power + 1)
-        # Keep integer if result is whole number
-        if new_coef.is_integer():
-            new_coef = int(new_coef)
-        integral.append(new_coef)
+    poly_int = [C]
 
-    # Remove trailing zeros to make the list as small as possible
-    while len(integral) > 1 and integral[-1] == 0:
-        integral.pop()
+    for i, coef in enumerate(poly):
+        coeff = coef / (i + 1)
+        if coeff.is_integer():
+            coeff = int(coeff)
+        poly_int.append(coeff)
 
-    return integral
+    while len(poly_int) > 1 and poly_int[-1] == 0:
+        poly_int.pop()
+
+    return poly_int

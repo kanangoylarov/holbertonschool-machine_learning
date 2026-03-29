@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""
-Module that preforms aritmetic operations to matrices
-"""
+'''
+Calc of matrix using np
+'''
 
 
 def np_elementwise(mat1, mat2):
-    """Needs a matrix as input Returns the resulting matrix"""
+    '''
+    Does same thing as above
+    '''
     return (mat1 + mat2, mat1 - mat2, mat1 * mat2, mat1 / mat2)

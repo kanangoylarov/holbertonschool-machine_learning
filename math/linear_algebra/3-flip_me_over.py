@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""docs for my function"""
+'''
+Find the transpose of matrix
+'''
 
 
 def matrix_transpose(matrix):
-    """Return the transpose of a matrix"""
-    tras = []
-    rows = len(matrix)
-    cols = len(matrix[0])
-
-    for i in range(cols):
-        """loop for cols"""
-        new = []
-        new = [matrix[j][i] for j in range(rows)]
-        tras.append(new)
-    return tras
+    '''
+    Does same thing as above
+    '''
+    transposed_matrix = [[
+        matrix[j][i] for j in range(len(matrix))]
+            for i in range(len(matrix[0]))]
+    return transposed_matrix

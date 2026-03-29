@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
-"""
-this is doc for task nine
-"""
+'''
+This module calc the sigma with closed form
+'''
 
 
 def summation_i_squared(n):
-    """
-    this is my function
-    """
-    if isinstance(n, int) and n > 0:
-        return n*(n + 1)*(2*n + 1) / 6
-    else:
+    '''
+    This function does same thing as above
+    '''
+    if not isinstance(n, int) or n <= 0:
         return None
+    return (n*(n+1)*(2*n+1)) // 6

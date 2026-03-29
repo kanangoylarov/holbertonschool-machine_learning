@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""
-Module that concatenates two matrices
-"""
+'''
+Concat of matrix using np
+'''
+
+
 import numpy as np
 
 
 def np_cat(mat1, mat2, axis=0):
-    """Needs a matrix as input Returns the resulting matr"""
+    '''
+    Does same thing as above
+    '''
     return np.concatenate((mat1, mat2), axis=axis)

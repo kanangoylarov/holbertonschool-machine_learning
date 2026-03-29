@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""
-Module that multiplies two matrices
-"""
+'''
+Matmul of matrix using np
+'''
+
+
 import numpy as np
 
 
 def np_matmul(mat1, mat2):
-    """Needs a matrix as input Returns the resulting matrix"""
+    '''
+    Does same thing as above
+    '''
     return np.matmul(mat1, mat2)

@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""docs of the file"""
-new = []
+'''
+Addition of matrix
+'''
 
 
 def add_arrays(arr1, arr2):
-    """addition of array"""
-    if len(arr1) != len(arr2):
-        return None
-    else:
+    '''
+    Does same thing as above
+    '''
+    new_arr = [0] * len(arr1)
+    if len(arr1) == len(arr2):
         for i in range(len(arr1)):
-            """loop for new"""
-            new.append(arr1[i] + arr2[i])
-    return new
+            new_arr[i] = arr1[i] + arr2[i]
+
+        return new_arr
+    return None

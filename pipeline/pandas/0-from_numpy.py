@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 
 '''
-This is creating pandas dataframe from numpy array function file
+This module creates np array and assign it to df
+Before that we need to upload pandas library
 '''
 import pandas as pd
 
 
 def from_numpy(array):
-
     '''
-    Creating function for process
+    This function creates orders then assign them to dataframe as columns
     '''
-
-    order = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
-    df = pd.DataFrame(array, columns=order[:array.shape[1]])
+    orders = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
+    df = pd.DataFrame(array, columns=orders[:array.shape[1]])
     return df

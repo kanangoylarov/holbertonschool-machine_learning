@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
-"""
-8-prune.py
-"""
+
+'''
+This module drop NaNs
+'''
 
 
 def prune(df):
-    """
-    Removes rows where the 'Close' column contains NaN values.
-
-    Args:
-        df (pd.DataFrame): The input DataFrame.
-
-    Returns:
-        pd.DataFrame: The DataFrame without NaN values in 'Close'.
-    """
-    return df.dropna(subset=['Close'])
+    '''
+    This fumction does same thing like above
+    '''
+    df = df.dropna(subset=['Close'])
+    return df
