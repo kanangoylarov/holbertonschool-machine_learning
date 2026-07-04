@@ -1,67 +1,88 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
+"""
+Contains the Poisson class which represents a Poisson distribution.
+"""
 
 
 class Poisson:
-    '''
-    Documented
-    '''
+    """
+    Class that represents a Poisson distribution.
+    """
 
-    def __init__(self, data=None, lambtha=1.):
-        if data is not None:
-            if isinstance(data, list):
-                if len(data) < 2:
-                    raise ValueError("data must contain multiple values")
-                else:
-                    total = 0
-                    for i in data:
-                        total += i
-                    self.lambtha = float(total / len(data))
-            else:
-                raise TypeError("data must be a list")
+    def __init__(self, data=None, lambtha=1.0):
+        """
+        Initializes the Poisson distribution.
 
-        else:
+        Args:
+            data (list): A list of data used to estimate the distribution.
+            lambtha (float): The expected number of occurrences.
+
+        Raises:
+            TypeError: If data is not a list.
+            ValueError: If lambtha is not positive.
+            ValueError: If data contains fewer than two data points.
+        """
+        if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
-            else:
-                self.lambtha = float(lambtha)
+            self.lambtha = float(lambtha)
+        else:
+            if not isinstance(data, list):
+                raise TypeError("data must be a list")
+            if len(data) < 2:
+                raise ValueError("data must contain multiple values")
+            # Calculate lambtha as the mean of the data
+            self.lambtha = float(sum(data) / len(data))
 
     def pmf(self, k):
-        '''
-        Documented
-        '''
-        if not isinstance(k, int):
-            k = int(k)
+        """
+        Calculates the value of the PMF for a given number of successes.
+
+        Args:
+            k (int): The number of successes.
+
+        Returns:
+            float: The PMF value for k.
+        """
+        # Convert k to integer as per requirements
+        k = int(k)
+
+        # Poisson distribution is defined for k >= 0
         if k < 0:
             return 0
 
-        fact = 1
-        for i in range(1, k + 1):
-            fact *= i
+        # Constants
+        e = 2.7182818285
+        lambtha = self.lambtha
 
-        return ((self.lambtha ** k) * (2.7182818285 ** -self.lambtha)) / fact
+        # Calculate k! (factorial)
+        factorial = 1
+        for i in range(1, k + 1):
+            factorial *= i
+
+        # Calculate PMF: (e^-lambtha * lambtha^k) / k!
+        # Note: x**y is the power operator in Python
+        pmf_value = (e ** (-lambtha) * (lambtha ** k)) / factorial
+
+        return pmf_value
 
     def cdf(self, k):
-        '''
-        Documented
-        '''
-        if not isinstance(k, int):
-            k = int(k)
+        """
+        Calculates the value of the CDF for a given number of successes.
 
+        Args:
+            k (int): The number of successes.
+
+        Returns:
+            float: The CDF value for k.
+        """
+        k = int(k)
         if k < 0:
             return 0
 
-        fact = 1
-        e_inv = 2.7182818285 ** (-self.lambtha)
-        total_probability = 0
-        for i in range(0, k + 1):
-            if i == 0:
-                total_probability += e_inv
-                continue
-            fact *= i
-            total_probability += ((self.lambtha ** i) * e_inv) / fact
+        # Summation of PMF from 0 to k
+        cdf_value = 0
+        for i in range(k + 1):
+            cdf_value += self.pmf(i)
 
-        return total_probability
+        return cdf_value

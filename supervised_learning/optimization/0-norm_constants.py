@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
+"""
+Calculates the normalization
+"""
 import numpy as np
 
 
 def normalization_constants(X):
-    '''
-    Doc
-    '''
-    m = np.mean(X, axis=0)
-    s = np.std(X, axis=0)
-    return m, s
+    """
+    a function that calculates the normalization (standardization) constants
+    of a matrix
+    :param X: numpy.ndarray of shape (m, nx) to normalize
+    :return: the mean and standard deviation of each feature, respectively
+    """
+    return np.mean(X, axis=0), np.std(X, axis=0)

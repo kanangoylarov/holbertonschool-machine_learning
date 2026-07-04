@@ -1,98 +1,76 @@
 #!/usr/bin/env python3
-"""Inverse of a matrix."""
+"""
+Module to calculate the minor matrix of a square matrix
+"""
 
 
 def determinant(matrix):
-    """Calculates the determinant of a square matrix."""
-    if (not isinstance(matrix, list) or
-            any(not isinstance(row, list) for row in matrix)):
-        raise TypeError("matrix must be a list of lists")
-
-    if matrix == [[]]:
-        return 1
-
-    if matrix == []:
-        raise TypeError("matrix must be a list of lists")
-
+    """
+    Helper function to calculate determinant of a matrix recursively.
+    """
     n = len(matrix)
-    if any(len(row) != n for row in matrix):
-        raise ValueError("matrix must be a square matrix")
-
+    if n == 0:
+        return 1
     if n == 1:
         return matrix[0][0]
     if n == 2:
-        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+        return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0])
 
     det = 0
     for j in range(n):
-        sub = [row[:j] + row[j + 1:] for row in matrix[1:]]
-        det += ((-1) ** j) * matrix[0][j] * determinant(sub)
+        sub_matrix = [row[:j] + row[j+1:] for row in matrix[1:]]
+        det += ((-1) ** j) * matrix[0][j] * determinant(sub_matrix)
     return det
 
 
-def minor(matrix):
-    """Calculates the minor matrix of a non-empty square matrix."""
-    if (not isinstance(matrix, list) or
-            any(not isinstance(row, list) for row in matrix)):
-        raise TypeError("matrix must be a list of lists")
-
-    if matrix == [] or matrix == [[]]:
-        raise ValueError("matrix must be a non-empty square matrix")
-
-    n = len(matrix)
-    if any(len(row) != n for row in matrix):
-        raise ValueError("matrix must be a non-empty square matrix")
-
-    if n == 1:
-        return [[1]]
-
-    minors = []
-    for i in range(n):
-        row = []
-        for j in range(n):
-            sub = [r[:j] + r[j + 1:] for k, r in enumerate(matrix) if k != i]
-            row.append(determinant(sub))
-        minors.append(row)
-    return minors
-
-
-def cofactor(matrix):
-    """Calculates the cofactor matrix of a non-empty square matrix."""
-    minors = minor(matrix)
-    n = len(minors)
-
-    cof = []
-    for i in range(n):
-        row = []
-        for j in range(n):
-            row.append(((-1) ** (i + j)) * minors[i][j])
-        cof.append(row)
-    return cof
-
-
-def adjugate(matrix):
-    """Calculates the adjugate matrix of a non-empty square matrix."""
-    cof = cofactor(matrix)
-    n = len(cof)
-    return [[cof[j][i] for j in range(n)] for i in range(n)]
-
-
 def inverse(matrix):
-    """Calculates the inverse of a non-empty square matrix."""
-    if (not isinstance(matrix, list) or
-            any(not isinstance(row, list) for row in matrix)):
+    """
+    Calculates the minor matrix of a matrix.
+
+    Args:
+        matrix: a list of lists whose minor matrix should be calculated
+
+    Returns:
+        The minor matrix of the input matrix
+    """
+    # 1. Validation: Must be a list of lists
+    if not isinstance(matrix, list) or len(matrix) == 0:
+        raise TypeError("matrix must be a list of lists")
+    if not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
 
-    if matrix == [] or matrix == [[]]:
-        raise ValueError("matrix must be a non-empty square matrix")
-
+    # 2. Validation: Must be non-empty and square
     n = len(matrix)
-    if any(len(row) != n for row in matrix):
+    if n == 1 and len(matrix[0]) == 0:
+        raise ValueError("matrix must be a non-empty square matrix")
+    if not all(len(row) == n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
 
-    det = determinant(matrix)
-    if det == 0:
+    # 4. Calculate Minor Matrix
+    minor_matrix = []
+    for i in range(n):
+        row_minors = []
+        for j in range(n):
+            # Create sub-matrix by removing row i and column j
+            sub_matrix = [row[:j] + row[j+1:] for k, row in enumerate(matrix)
+                          if k != i]
+            row_minors.append(((-1) ** (i + j)) * determinant(sub_matrix))
+        minor_matrix.append(row_minors)
+
+    det_ = determinant(matrix)
+    if det_ == 0:
         return None
 
-    adj = adjugate(matrix)
-    return [[adj[i][j] / det for j in range(n)] for i in range(n)]
+    # 5. Handle 1x1 case
+    if n == 1:
+        return [[1 / matrix[0][0]]]
+
+    adjugate_matrix = []
+    for a in range(len(minor_matrix)):
+        row_ = []
+        for b in range(len(minor_matrix[0])):
+            row_.append(minor_matrix[b][a])
+        adjugate_matrix.append(row_)
+
+    inv_matrix = [[col / det_ for col in row] for row in adjugate_matrix]
+    return inv_matrix

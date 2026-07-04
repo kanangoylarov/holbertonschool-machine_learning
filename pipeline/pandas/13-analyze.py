@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 '''
-This module computes desc() except Timestamp column
+Computes descriptive statistics for all columns except the Timestamp column
 '''
 
 
 def analyze(df):
     '''
-    Same with above
+    Computes descriptive statistics for all columns except the Timestamp colum
     '''
-    df = df.drop(columns=['Timestamp'])
-    return df.describe()
+    return df.drop(columns=['Timestamp']).describe()

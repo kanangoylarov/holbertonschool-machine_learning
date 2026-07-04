@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-'''
-Doc
-'''
+'''module documented'''
 import numpy as np
 
 
 def sensitivity(confusion):
-    '''
-    My function document
-    '''
-    tp = np.diag(confusion)
-    actual_positives = np.sum(confusion, axis=1)
-    return tp / actual_positives
+    '''module documented'''
+    res = []
+    for i in range(len(confusion)):
+        TP, FN = 0, 0
+        for j in range(len(confusion[i])):
+            if i == j:
+                TP = confusion[i][j]
+            else:
+                FN += confusion[i][j]
+        sens = TP / (TP + FN)
+        res.append(sens)
+    return np.asarray(res)

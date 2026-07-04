@@ -1,13 +1,26 @@
 #!/usr/bin/env python3
-"""A module that does the trick"""
+"""Dimensionality Reduction algorithms implementations."""
 import numpy as np
 
 
 def pca(X, var=0.95):
-    """A function that does the trick"""
-    u, Sigma, vh = np.linalg.svd(X, full_matrices=False)
-    cumulative_var = np.cumsum(Sigma) / np.sum(Sigma)
-    r = (np.argwhere(cumulative_var >= var))[0, 0]
-    w = vh.T
-    wr = w[:, :r + 1]
-    return wr
+    """
+    Compute the PCA, to get var% of the var explain
+    :param X: The X to decompose
+    :param var: The var threshold
+    :return: THe W matrix
+    """
+    U, S, Vt = np.linalg.svd(X)
+
+    total_var_explain = 0
+    idx = 0
+
+    normal_S = S / np.sum(S)
+
+    for var_explain in normal_S:
+        total_var_explain += var_explain
+        idx += 1
+        if total_var_explain >= var:
+            break
+
+    return Vt.T[..., :idx]

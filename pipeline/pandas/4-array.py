@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-
 '''
-This module selects last 10 rows and
-converts them into array
+function that takes dataframe and converts last 10 rows into numpy ndarray
 '''
 
 
 def array(df):
     '''
-    This fumction does same thing like above
+    select only High and Close columns
+    convert last 10 rows into ndarray
     '''
-    dt = df[['High', 'Close']].tail(10)
-    numpy_array = dt.to_numpy()
-    return numpy_array
+    return df[['High', 'Close']].tail(10).to_numpy()

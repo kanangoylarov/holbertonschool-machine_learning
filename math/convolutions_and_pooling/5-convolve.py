@@ -1,52 +1,61 @@
 #!/usr/bin/env python3
-'''
-Doc
-'''
-
+"""
+Performs a strided convolution on images with multiple kernels/filters
+"""
 import numpy as np
 
 
 def convolve(images, kernels, padding='same', stride=(1, 1)):
-    '''
-    Doc
-    '''
-    m, h, w, c = images.shape
-    kh, kw, kc, nc = kernels.shape
-    sh, sw = stride
+    """
+    a function that performs a convolution with multiple kernel/filters
+    :param images: a numpy.ndarray with shape (m, h, w, c) containing multiple
+    grayscale images
+        m is the number of images
+        h is the height in pixels of the images
+        w is the width in pixels of the images
+        c is the number of channels in the image
+    :param kernels: a numpy.ndarray with shape (kh, kw, c, nc) containing the
+    kernel for the convolution
+        kh is the height of the kernel
+        kw is the width of the kernel
+        nc is the number of kernels
+    :param padding: a tuple of (ph, pw)
+        ph is the padding for the height of the image
+        pw is the padding for the width of the image
+    :param stride: is a tuple of (sh, sw)
+        sh is the stride for the height of the image
+        sw is the stride for the width of the image
+    :return: numpy.ndarray containing the convolved images
+    """
+    c_images, images_h, images_w, _ = images.shape
+    f_height = kernels.shape[0]
+    f_width = kernels.shape[1]
+    nc = kernels.shape[3]
+    stride_h, stride_w = stride
 
-    if padding == 'same':
-        ph = int(np.ceil((((h - 1) * sh + kh - h) / 2)))
-        pw = int(np.ceil((((w - 1) * sw + kw - w) / 2)))
-    elif padding == 'valid':
-        ph = 0
-        pw = 0
+    if padding == "same":
+        padding_h = ((images_h - 1) * stride_h + f_height - images_h) // 2 + 1
+        padding_w = ((images_w - 1) * stride_w + f_width - images_w) // 2 + 1
+    elif padding == "valid":
+        padding_h, padding_w = (0, 0)
     else:
-        ph, pw = padding
+        padding_h, padding_w = padding
 
-    padded = np.pad(
-        images,
-        ((0, 0), (ph, ph), (pw, pw), (0, 0)),
-        mode='constant'
-    )
+    c_height = (images.shape[1] + 2 * padding_h - f_height) // stride_h + 1
+    c_width = (images.shape[2] + 2 * padding_w - f_width) // stride_w + 1
+    # np.pad works with a before_N and after_N parameter defined in a tuple
+    # that will add the selected pad at each dimension
+    pad_img = np.pad(images, ((0, 0), (padding_h, padding_h), (padding_w,
+                                                               padding_w),
+                              (0, 0)))
 
-    output_h = ((h + 2 * ph - kh) // sh) + 1
-    output_w = ((w + 2 * pw - kw) // sw) + 1
-
-    output = np.zeros((m, output_h, output_w, nc))
-
-    for i in range(output_h):
-        for j in range(output_w):
-            row_start = i * sh
-            row_end = row_start + kh
-            col_start = j * sw
-            col_end = col_start + kw
-
-            region = padded[:, row_start:row_end, col_start:col_end, :]
-
-            for k in range(nc):
-                output[:, i, j, k] = np.sum(
-                    region * kernels[:, :, :, k],
-                    axis=(1, 2, 3)
-                )
-
-    return output
+    convolved = np.zeros((c_images, c_height, c_width, nc))
+    for row in range(c_height):
+        for col in range(c_width):
+            for ker in range(nc):
+                pad_ele = pad_img[:, row * stride_h:row * stride_h + f_height,
+                                  col * stride_w:col * stride_w + f_width]
+                sum_mul_ele = np.sum(pad_ele * kernels[:, :, :, ker],
+                                     axis=(1, 2, 3))
+                convolved[:, row, col, ker] = sum_mul_ele
+    return convolved

@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
-'''
-Doc
-'''
+'''module documented'''
 import numpy as np
 
 
 def specificity(confusion):
-    '''
-    My function document
-    '''
-    total = np.sum(confusion)
-    tp = np.diag(confusion)
-    positives = np.sum(confusion, axis=1)
-    predicted_positives = np.sum(confusion, axis=0)
-    fp = predicted_positives - tp
-    fn = positives - tp
-    tn = total - (tp + fp + fn)
-
-    return tn / (tn + fp)
+    '''function documented'''
+    res = []
+    total = confusion.sum()
+    for i in range(len(confusion)):
+        TP = confusion[i, i]
+        FP = confusion[:, i].sum() - TP
+        FN = confusion[i, :].sum() - TP
+        TN = total - TP - FP - FN
+        spec = TN / (TN + FP)
+        res.append(spec)
+    return np.asarray(res)

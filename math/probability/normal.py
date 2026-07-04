@@ -1,72 +1,55 @@
 #!/usr/bin/env python3
-
-
-'''
-Doc
-'''
+'''module documented'''
 
 
 class Normal:
-    '''
-    Doc
-    '''
-    pi = 3.141592653589793
-
+    '''class documented'''
     def __init__(self, data=None, mean=0., stddev=1.):
-        if data is not None:
-            if isinstance(data, list):
-                if len(data) < 2:
-                    raise ValueError("data must contain multiple values")
-                else:
-                    total = 0
-                    for i in data:
-                        total += i
-                    self.mean = float(total / len(data))
-
-                    total2 = 0
-                    for i in data:
-                        total2 += (i - self.mean) ** 2
-
-                    self.stddev = (total2 / len(data)) ** 0.5
-            else:
-                raise TypeError("data must be a list")
-        else:
+        '''constructor documented'''
+        self.data = data
+        if data is None:
             if stddev <= 0:
                 raise ValueError("stddev must be a positive value")
-            else:
-                self.stddev = float(stddev)
-                self.mean = float(mean)
+            self.mean = mean
+            self.stddev = stddev
+        else:
+            if not isinstance(data, list):
+                raise TypeError("data must be a list")
+            if len(data) < 2:
+                raise ValueError("data must contain multiple values")
+            self.mean = sum(data) / len(data)
+            self.stddev = self.standard_dev()
+
+    def standard_dev(self):
+        '''method documented'''
+        stddev = 0
+        for i in range(len(self.data)):
+            stddev = stddev + (self.data[i] - self.mean) ** 2
+        stddev = (stddev / len(self.data)) ** (0.5)
+        return stddev
 
     def z_score(self, x):
-        '''
-        Doc
-        '''
+        '''method1 documented'''
         return (x - self.mean) / self.stddev
 
     def x_value(self, z):
-        '''
-        Doc
-        '''
+        '''method2 documented'''
         return z * self.stddev + self.mean
 
     def pdf(self, x):
-        '''
-        Doc
-        '''
-        pi = 3.141592653589793
-        e = 2.7182818285
-        exponent = -0.5 * ((x - self.mean) / self.stddev) ** 2
-        coefficient = 1 / (self.stddev * (2 * pi) ** 0.5)
-
-        return coefficient * (e ** exponent)
+        '''method3 documented'''
+        return ((1 / (2 * 3.1415926536 * self.stddev ** 2) ** (0.5))
+                * 2.7182818285 **
+                (-(x-self.mean) ** 2 / (2 * self.stddev ** 2)))
 
     def cdf(self, x):
-        '''
-        Doc
-        '''
-        v = (x - self.mean) / (self.stddev * (2 ** 0.5))
-        erf = (2 / (self.pi ** 0.5)) * (
-            v - (v**3 / 3) + (v**5 / 10) - (v**7 / 42) + (v**9 / 216)
-        )
+        '''method4 documented'''
+        return 0.5 * (1 + Normal.erf((x - self.mean) /
+                                     (2 ** 0.5 * self.stddev)))
 
-        return 0.5 * (1 + erf)
+    @staticmethod
+    def erf(z):
+        """Approximate erf using a Maclaurin series"""
+        pi = 3.1415926536
+        return ((2 / (pi ** 0.5)) * (z - (z**3)/3 + (z**5)/10 -
+                                     (z**7)/42 + (z**9)/216))

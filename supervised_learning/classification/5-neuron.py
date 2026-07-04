@@ -1,75 +1,65 @@
 #!/usr/bin/env python3
-'''
-Doc
-'''
+'''module documented'''
 import numpy as np
 
 
 class Neuron:
-    '''
-    Doc
-    '''
+    '''class documented'''
 
     def __init__(self, nx):
-
-        if not isinstance(nx, int):
-            raise TypeError('nx must be an integer')
-
+        '''init documented'''
+        if not (isinstance(nx, int)):
+            raise TypeError("nx must be an integer")
         if nx < 1:
-            raise ValueError('nx must be a positive integer')
-
+            raise ValueError("nx must be a positive integer")
         self.__W = np.random.randn(1, nx)
         self.__b = 0
         self.__A = 0
 
-    def forward_prop(self, x):
-        '''
-        Doc
-        '''
-
-        Z = np.dot(self.__W, x) + self.__b
-        self.__A = 1 / (1 + np.exp(-Z))
-        return self.__A
-
-    def cost(self, Y, A):
-        '''
-        Doc
-        '''
-        m = Y.shape[1]
-        cost = (-1/m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
-        return cost
-
-    def evaluate(self, X, Y):
-        '''
-        Doc
-        '''
-        A = self.forward_prop(X)
-        predictions = np.where(A >= 0.5, 1, 0)
-        cost = self.cost(Y, A)
-        return predictions, cost
-
     def gradient_descent(self, X, Y, A, alpha=0.05):
-        '''
-        Doc
-        '''
-        m = X.shape[1]
+        '''update W and b'''
+        m = Y.shape[1]
         dZ = A - Y
-        dW = (1/m) * np.dot(dZ, X.T)
+        dW = 1 / m * np.dot(dZ, X.T)
         db = (1/m) * np.sum(dZ)
-        self.__W -= alpha * dW
-        self.__b -= alpha * db
+        self.__W = self.__W - (alpha * dW)
+        self.__b = self.__b - (alpha * db)
 
     @property
     def W(self):
-        '''Getter for W'''
+        '''getter for W'''
         return self.__W
 
     @property
     def b(self):
-        '''Getter for b'''
+        '''getter for b'''
         return self.__b
 
     @property
     def A(self):
-        '''Getter for A'''
+        '''getter for A'''
         return self.__A
+
+    def forward_prop(self, X):
+        '''forward propogation'''
+        s = np.matmul(self.__W, X) + self.__b
+        self.__A = self.sigmoid(s)
+        return self.__A
+
+    def cost(self, Y, A):
+        '''cost function'''
+        x = 1.0000001 - A
+        cost_f = -np.mean((Y * np.log(A)) + (1 - Y) * np.log(x))
+        return cost_f
+
+    def evaluate(self, X, Y):
+        '''evaulation'''
+        pred = self.forward_prop(X)
+        pred = np.where(pred >= 0.5, 1, 0)
+        cost = self.cost(Y, self.__A)
+        return pred, cost
+
+    @staticmethod
+    def sigmoid(X):
+        '''sigmoid function'''
+        return 1 / (1 + np.e ** (-X))

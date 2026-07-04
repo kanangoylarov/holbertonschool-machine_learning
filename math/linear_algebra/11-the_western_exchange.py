@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-'''
-Transpose of matrix
-'''
+"""
+Module that provides a function to transpose a matrix.
+"""
 
 
 def np_transpose(matrix):
-    '''
-    Does same thing as above
-    '''
-    matrix_T = matrix.transpose()
-    return matrix_T
+    """
+    Transposes a matrix.
+
+    Args:
+        matrix (numpy.ndarray): Input matrix
+
+    Returns:
+        numpy.ndarray: Transposed matrix
+    """
+    return matrix.transpose()

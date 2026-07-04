@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 '''
-Addition of matrix
+module that provide a function to add 2 arrays element-wise
 '''
 
 
 def add_arrays(arr1, arr2):
     '''
-    Does same thing as above
+    args:
+        arr1 - list of int/floats
+        arr2 - list oof int/floats
+    return:
+        new list with sum of arrays element-wise
     '''
-    new_arr = [0] * len(arr1)
     if len(arr1) == len(arr2):
+        arr = []
         for i in range(len(arr1)):
-            new_arr[i] = arr1[i] + arr2[i]
-
-        return new_arr
+            arr.append(arr1[i] + arr2[i])
+        return arr
     return None

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-
 '''
-This module flips data
+function that takes dataframe and sorts the data in reverse chronological
+order, and then returns transposed dataframe
 '''
 
 
 def flip_switch(df):
     '''
-    This fumction does same thing like above
+    function that takes dataframe and sorts the data in reverse chronological
+    order, and then returns transposed dataframe
     '''
-    return df.iloc[::-1].transpose()
+    return df.sort_values(by='Timestamp', ascending=False).T

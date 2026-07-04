@@ -1,25 +1,39 @@
 #!/usr/bin/env python3
-
-'''
-This module calc the derivative of poly
-'''
+"""
+Module for calculating the derivative of a polynomial.
+"""
 
 
 def poly_derivative(poly):
-    '''
-    Does same thing as above
-    '''
-    if not isinstance(poly, list):
-        return None
-    if not all(isinstance(c, (int, float)) for c in poly):
-        return None
-    if len(poly) == 0:
-        return None
+    """
+    Calculates the derivative of a polynomial.
 
-    poly_der = []
-    for i in range(1, len(poly)):
-        poly_der.append(i * poly[i])
+    Args:
+        poly (list): A list of coefficients representing a polynomial.
+                     The index represents the power of x.
 
-    if len(poly_der) == 0:
+    Returns:
+        list: Coefficients of the derivative polynomial.
+        None: If poly is not a valid list of coefficients.
+    """
+    # Validate that poly is a non-empty list of numbers
+    if not isinstance(poly, list) or len(poly) == 0:
+        return None
+    for coeff in poly:
+        if not isinstance(coeff, (int, float)):
+            return None
+
+    # A polynomial of a single constant (e.g., [5]) has a derivative of 0
+    if len(poly) == 1:
         return [0]
-    return poly_der
+
+    # Calculate derivative: derivative[n-1] = poly[n] * n
+    # We skip the constant term (index 0) because its derivative is 0
+    derivative = [poly[i] * i for i in range(1, len(poly))]
+
+    # Special case: if the polynomial was [0, 0, 0], derivative is [0]
+    # This ensures we don't return an empty list if all terms were zero
+    if not any(derivative):
+        return [0]
+
+    return derivative

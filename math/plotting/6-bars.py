@@ -1,32 +1,43 @@
 #!/usr/bin/env python3
-'''
-This module plots stacked bar of fruits
-'''
+"""
+This module contains a function that plots a stacked bar graph
+representing the quantity of fruit possessed by different people.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 def bars():
-    '''
-    This function does same thing as above
-    '''
+    """
+    Plots a stacked bar graph with specific colors, labels, and axis limits.
+    """
     np.random.seed(5)
     fruit = np.random.randint(0, 20, (4, 3))
     plt.figure(figsize=(6.4, 4.8))
-    names = ['Farrah', 'Fred', 'Felicia']
-    column1 = fruit[0, :]
-    column2 = fruit[1, :]
-    column3 = fruit[2, :]
-    column4 = fruit[3, :]
-    plt.bar(names, column1, label='apples', width=0.5, color='red')
-    plt.bar(names, column2, label='bananas', bottom=column1, width=0.5,
-            color='yellow')
-    plt.bar(names, column3, label='oranges', bottom=column1+column2,
-            width=0.5, color='#ff8000')
-    plt.bar(names, column4, label='peaches', bottom=column1+column2+column3,
-            width=0.5, color='#ffe5b4')
-    plt.yticks(np.arange(0, 81, 10))
-    plt.legend()
-    plt.title('Number of Fruit per Person')
+
+    people = ['Farrah', 'Fred', 'Felicia']
+    fruit_names = ['apples', 'bananas', 'oranges', 'peaches']
+    colors = ['red', 'yellow', '#ff8000', '#ffe5b4']
+    width = 0.5
+
+    # Initialize the bottom of the bars at 0
+    bottom_val = np.zeros(3)
+
+    # Loop through each row (fruit type) to stack them
+    for i in range(len(fruit)):
+        plt.bar(people, fruit[i], width=width, bottom=bottom_val,
+                color=colors[i], label=fruit_names[i])
+        # Update the bottom value for the next fruit in the stack
+        bottom_val += fruit[i]
+
+    # Set the y-axis label and range
     plt.ylabel('Quantity of Fruit')
+    plt.ylim(0, 80)
+    plt.yticks(np.arange(0, 81, 10))
+
+    # Set the title and legend
+    plt.title('Number of Fruit per Person')
+    plt.legend()
+
+    # Display the plot
     plt.show()

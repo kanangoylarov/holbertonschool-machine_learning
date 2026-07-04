@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-
 '''
-This module selects every 60th row of these columns
+function that takes a pd.DataFrame and extracts the columns High, Low, Close,
+and Volume_BTC. Then selects every 60th row from these columns.
+Returns: the sliced pd.DataFrame
 '''
 
 
 def slice(df):
     '''
-    This fumction does same thing like above
+    df - dataframe
+    return: sliced df with every 60th row
     '''
-    return df[['High', 'Low', 'Close', 'Volume_(BTC)']].iloc[::60]
+    df = df[['High', 'Low', 'Close', 'Volume_(BTC)']]
+    return df.iloc[1500::60]

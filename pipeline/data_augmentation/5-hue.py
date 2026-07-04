@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 """
-Documented
+Adjust the hue of an image with TensorFlow
 """
 import tensorflow as tf
 
 
 def change_hue(image, delta):
     """
-    Doc
+    Changes the hue of an image.
+
+    Args:
+        - image (tf.Tensor): the input image to adjust.
+        - delta (float): how much to add to the hue channel.
+
+    Return:
+        tf.Tensor: the altered image
     """
-    img = tf.image.adjust_hue(image, delta)
-    return img
+    return tf.image.adjust_hue(image=image, delta=delta)

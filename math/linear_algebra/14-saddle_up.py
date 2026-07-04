@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-'''
-Matmul of matrix using np
-'''
-
+"""
+Module that provides a function to perform matrix multiplication.
+"""
 
 import numpy as np
 
 
 def np_matmul(mat1, mat2):
-    '''
-    Does same thing as above
-    '''
+    """
+    Performs matrix multiplication between two numpy arrays.
+
+    Args:
+        mat1 (numpy.ndarray): First matrix
+        mat2 (numpy.ndarray): Second matrix
+
+    Returns:
+        numpy.ndarray: Resulting matrix product
+    """
     return np.matmul(mat1, mat2)

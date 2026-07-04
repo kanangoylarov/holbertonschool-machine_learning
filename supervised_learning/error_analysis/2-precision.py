@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-'''
-Doc
-'''
+'''module documented'''
 import numpy as np
 
 
 def precision(confusion):
-    '''
-    My function document
-    '''
-    tp = np.diag(confusion)
-    actual_positives = np.sum(confusion, axis=0)
-    return tp / actual_positives
+    '''function documented'''
+    res = []
+    for i in range(len(confusion)):
+        TP, FP, prec = 0, 0, 0
+        for j in range(len(confusion[i])):
+            if i == j:
+                TP = confusion[j][i]
+            else:
+                FP += confusion[j][i]
+        prec = TP / (TP + FP)
+        res.append(prec)
+    return np.asarray(res)

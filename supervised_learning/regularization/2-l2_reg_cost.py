@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-
-'''
-Doc
-'''
+"""L2 Regularization Cost"""
 import tensorflow as tf
 
 
 def l2_reg_cost(cost, model):
-    '''
-    Doc
-    '''
-    return cost + tf.stack(model.losses)
+    """This function calculates the cost of
+     a neural network with L2 regularization"""
+    reg_losses = [tf.reduce_sum(loss) for loss in model.losses]
+    total_cost = cost + tf.stack(reg_losses)
+    return total_cost

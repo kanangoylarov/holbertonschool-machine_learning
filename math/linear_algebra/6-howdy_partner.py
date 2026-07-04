@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 '''
-Concatenation of matrix
+this module provides function that concatenates 2 arrays
 '''
 
 
 def cat_arrays(arr1, arr2):
     '''
-    Does same thing as above
+    args:
+        arr1 - list of int/floats
+        arr2 - list of int/floats
+    return new list
     '''
-    new_list = arr1.copy()
-    for i in arr2:
-        new_list.append(i)
-
-    return new_list
+    return arr1 + arr2

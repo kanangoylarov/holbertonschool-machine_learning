@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-'''
-This module plots five previous charts at the same time
-'''
+"""
+Module to plot all five previous graphs in one single figure.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 def all_in_one():
-    '''
-    This function does same thing as above
-    '''
+    """
+    Creates a 3x2 grid of subplots containing line graphs,
+    scatter plots, exponential decay plots, and a histogram.
+    """
     y0 = np.arange(0, 11) ** 3
 
     mean = [69, 0]
@@ -33,35 +34,54 @@ def all_in_one():
     np.random.seed(5)
     student_grades = np.random.normal(68, 15, 50)
 
-    a = plt.subplot2grid((3,2), (0,0), colspan=1)
-    b = plt.subplot2grid((3,2), (1,0), colspan=1)
-    c = plt.subplot2grid((3,2), (1,1), colspan=1)
-    d = plt.subplot2grid((3,2), (0,1), colspan=1)
-    e = plt.subplot2grid((3,2), (2,0), colspan=2)
-    a.set_xlim(0, 10)
-    a.plot(y, 'r')
-    b.set_xlim([0, 28650])
-    b.set_yscale('log')
-    b.set_xlabel('Time (years)',fontsize=8)
-    b.set_ylabel('Fraction Remaining',fontsize=8)
-    b.set_title('Exponential Decay of C-14',fontsize=8)
-    b.plot(x2, y2)
-    c.plot(x3, y31, 'r--', x3, y32, 'g')
-    c.set_title("Exponential Decay of Radioactive Elements", fontsize=8)
-    c.set_xlabel("Time (years)",fontsize=8)
-    c.set_ylabel("Fraction Remaining",fontsize=8)
-    c.legend(['C-14', 'Ra-226'], loc="upper right",fontsize=8)
-    d.set_xlabel('Height (in)',fontsize=8)
-    d.set_ylabel('Weight (lbs)',fontsize=8)
-    d.set_title('Men\'s Height vs Weight',fontsize=8)
-    d.plot(x1, y1, 'mo')
-    e.set_xlim(0, 100)
-    e.set_ylim(0, 30)
-    e.set_xticks(np.arange(0, 101, step=10))
-    e.hist(student_grades, range=(0, 100), edgecolor='black')
-    e.set_xlabel('Grades',fontsize=8)
-    e.set_ylabel('Number of Students',fontsize=8)
-    e.set_title('Project A',fontsize=8)
+    # Initialize the figure
+    fig = plt.figure(figsize=(6.4, 4.8))
+    fig.suptitle('All in One')
+
+    # 1. Line Graph (Top Left)
+    ax1 = plt.subplot2grid((3, 2), (0, 0))
+    ax1.plot(y0, 'r-')
+    ax1.set_xlim(0, 10)
+
+    # 2. Scatter Plot (Top Right)
+    ax2 = plt.subplot2grid((3, 2), (0, 1))
+    ax2.scatter(x1, y1, c='m', s=10)
+    ax2.set_title("Men's Height vs Weight", fontsize='x-small')
+    ax2.set_xlabel('Height (in)', fontsize='x-small')
+    ax2.set_ylabel('Weight (lbs)', fontsize='x-small')
+
+    # 3. Log Scale Decay (Middle Left)
+    ax3 = plt.subplot2grid((3, 2), (1, 0))
+    ax3.plot(x2, y2)
+    ax3.set_yscale('log')
+    ax3.set_xlim(0, 28650)
+    ax3.set_title('Exponential Decay of C-14', fontsize='x-small')
+    ax3.set_xlabel('Time (years)', fontsize='x-small')
+    ax3.set_ylabel('Fraction Remaining', fontsize='x-small')
+
+    # 4. Two Lines Decay (Middle Right)
+    ax4 = plt.subplot2grid((3, 2), (1, 1))
+    ax4.plot(x3, y31, 'r--', label='C-14')
+    ax4.plot(x3, y32, 'g-', label='Ra-226')
+    ax4.set_xlim(0, 20000)
+    ax4.set_ylim(0, 1)
+    ax4.set_title('Exponential Decay of Radioactive Elements',
+                  fontsize='x-small')
+    ax4.set_xlabel('Time (years)', fontsize='x-small')
+    ax4.set_ylabel('Fraction Remaining', fontsize='x-small')
+    ax4.legend(loc='upper right', fontsize='x-small')
+
+    # 5. Histogram (Bottom, spanning two columns)
+    ax5 = plt.subplot2grid((3, 2), (2, 0), colspan=2)
+    bins = np.arange(0, 101, 10)
+    ax5.hist(student_grades, bins=bins, edgecolor='black')
+    ax5.set_xlim(0, 100)
+    ax5.set_ylim(0, 30)
+    ax5.set_xticks(bins)
+    ax5.set_title('Project A', fontsize='x-small')
+    ax5.set_xlabel('Grades', fontsize='x-small')
+    ax5.set_ylabel('Number of Students', fontsize='x-small')
+
+    # Adjust layout to prevent overlap
     plt.tight_layout()
-    plt.suptitle("All in One", fontsize=10)
     plt.show()

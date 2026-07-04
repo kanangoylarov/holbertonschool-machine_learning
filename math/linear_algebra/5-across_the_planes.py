@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 '''
-Addition of matrix
+module that provide a function to add 2 matrices element-wise
 '''
 
 
 def add_matrices2D(mat1, mat2):
     '''
-    Does same thing as above
+    args:
+        mat1 - matrix of int/floats
+        mat2 - matrix of int/floats
+    return:
+        new matrice with sum of matrices element-wise
     '''
-    rows = len(mat1)
-    cols = len(mat1[0])
-    new_mat = [[0 for _ in range(cols)] for _ in range(rows)]
     if len(mat1[0]) == len(mat2[0]):
-        for i in range(rows):
-            for j in range(cols):
-                new_mat[i][j] = mat1[i][j] + mat2[i][j]
-        return new_mat
+        arr = []
+        for i in range(len(mat1)):
+            sub_arr = []
+            for j in range(len(mat1[0])):
+                sub_arr.append(mat1[i][j] + mat2[i][j])
+            arr.append(sub_arr)
+        return arr
     return None

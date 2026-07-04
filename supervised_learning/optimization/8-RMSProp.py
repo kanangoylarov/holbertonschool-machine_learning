@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
+"""RMSProp Upgraded"""
 import tensorflow as tf
 
 
 def create_RMSProp_op(alpha, beta2, epsilon):
-    '''
-    Doc
-    '''
+    """This function sets up the RMSProp
+     optimization algorithm in TensorFlow"""
     optimizer = tf.keras.optimizers.RMSprop(
-                                            learning_rate=alpha,
-                                            rho=beta2,
-                                            epsilon=epsilon
-                                            )
+        alpha, beta2, epsilon
+    )
     return optimizer

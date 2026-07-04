@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 """
-Doc
+Randomly adjust the brightness of an image with TensorFlow
 """
 import tensorflow as tf
 
 
 def change_brightness(image, max_delta):
     """
-    Doc
+    Randomly adjusts the brightness of an image.
+
+    Args:
+        - image (tf.Tensor): the input image to adjust.
+        - max_delta (non-negative float): maximum relative change in brightness
+    Returns:
+        tf.Tensor: the altered image
     """
-    img = tf.image.random_brightness(image, max_delta)
-    return img
+    return tf.image.random_brightness(image=image, max_delta=max_delta)

@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
-'''
-Doc
-'''
-
+'''valid convolution on grayscale images'''
 import numpy as np
 
 
 def convolve_grayscale_valid(images, kernel):
     '''
-    Doc
-    '''
-    m, h, w = images.shape
-    kh, kw = kernel.shape
-
-    output_h = h - kh + 1
-    output_w = w - kw + 1
-
-    output = np.zeros((m, output_h, output_w))
-
-    for i in range(output_h):
-        for j in range(output_w):
-            current = images[:, i:i + kh, j:j + kw]
-            output[:, i, j] = np.sum(current * kernel, axis=(1, 2))
-
-    return output
+    images is a numpy.ndarray with shape (m, h, w) containing multiple
+    grayscale images
+        m is the number of images
+        h is the height in pixels of the images
+        w is the width in pixels of the images
+    kernel is a numpy.ndarray with shape (kh, kw) containing the kernel for th
+    convolution
+        kh is the height of the kernel
+        kw is the width of the kernel
+    Returns: a numpy.ndarray containing the convolved images'''
+    m, h, w = images.shape[0], images.shape[1], images.shape[2]
+    kh, kw = kernel.shape[0], kernel.shape[1]
+    conv_imgs = np.zeros((m, h - kh + 1, w - kw + 1))
+    for row in range(h - kh + 1):
+        for column in range(w - kw + 1):
+            part = images[:, row:row + kh, column:column + kw] * kernel
+            conv_imgs[:, row, column] = np.sum(part, axis=(1, 2))
+    return conv_imgs

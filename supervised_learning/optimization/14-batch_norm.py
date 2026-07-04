@@ -1,29 +1,24 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
+"""Comment of Function"""
 import tensorflow as tf
 
 
 def create_batch_norm_layer(prev, n, activation):
-    '''
-    Doc
-    '''
-    active = tf.keras.initializers.VarianceScaling(mode='fan_avg')
-    layer = tf.keras.layers.Dense(n, activation=None,
-                                  kernel_initializer=active,
-                                  name='layer')(prev)
-    mu, sigma_2 = tf.nn.moments(layer, axes=[0])
-    gamma = tf.Variable(initial_value=tf.constant(1.0, shape=[n]),
-                        name='gamma')
-    beta = tf.Variable(initial_value=tf.constant(0.0, shape=[n]),
-                       name='beta')
-    Z_b_norm = tf.nn.batch_normalization(
-        layer, mu,
-        sigma_2,
-        offset=beta,
-        scale=gamma,
-        variance_epsilon=1e-7
-    )
-    return activation(Z_b_norm)
+    """Batch Normaliztion Layer"""
+    init = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    dense = tf.keras.layers.Dense(
+        units=n,
+        kernel_initializer=init,
+        use_bias=False
+    )(prev)
+
+    gamma = tf.Variable(tf.ones([n]), trainable=True)
+    beta = tf.Variable(tf.zeros([n]), trainable=True)
+
+    mean, variance = tf.nn.moments(dense, axes=[0])
+    epsilon = 1e-7
+
+    Z_norm = (dense - mean) / tf.sqrt(variance + epsilon)
+    Z_t = gamma * Z_norm + beta
+
+    return activation(Z_t)

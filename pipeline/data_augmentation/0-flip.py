@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Documented
+Flips an image horizontally
 """
 import tensorflow as tf
 
 
 def flip_image(image):
     """
-    Doc
+    Flips an image horizontally
+    :param image: is a 3D tf.Tensor containing the image to flip
+    :return: the flipped image
     """
-    flip = tf.image.flip_left_right(image)
-    return flip
+    return tf.image.flip_left_right(image)

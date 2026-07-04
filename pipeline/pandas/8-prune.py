@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-
 '''
-This module drop NaNs
+function that takes df and removes any entries where Close has NaN values
 '''
 
 
 def prune(df):
     '''
-    This fumction does same thing like above
+    function that takes df and removes any entries where Close has NaN values
     '''
-    df = df.dropna(subset=['Close'])
-    return df
+    return df.dropna(subset=['Close'])

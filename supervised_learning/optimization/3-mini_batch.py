@@ -1,33 +1,18 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
-import tensorflow as tf
+"""Mini Batch"""
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
 def create_mini_batches(X, Y, batch_size):
-    '''
-    Doc
-    '''
-    X_shuffled, Y_shuffled = shuffle_data(X, Y)
-    mini_batches = []
-    m = X.shape[0]
+    """This function creates mini-batches to be used for
+    training a neural network using mini-batch gradient descent"""
+    X_shuffle, Y_shuffle = shuffle_data(X, Y)
+    mini_batch = []
+    i = len(X)
 
-    num_of_batches = m // batch_size
-    for i in range(num_of_batches):
-        start_index = i * batch_size
-        end_index = start_index + batch_size
-
-        X_batch = X_shuffled[start_index:end_index]
-        Y_batch = Y_shuffled[start_index:end_index]
-
-        mini_batches.append([X_batch, Y_batch])
-
-    if m % batch_size != 0:
-        X_batch = X_shuffled[num_of_batches * batch_size:]
-        Y_batch = Y_shuffled[num_of_batches * batch_size:]
-        mini_batches.append([X_batch, Y_batch])
-
-    return mini_batches
+    for first_index in range(0, i, batch_size):
+        last_index = min(first_index + batch_size, i)
+        X_batch = X_shuffle[first_index:last_index]
+        Y_batch = Y_shuffle[first_index:last_index]
+        mini_batch.append((X_batch, Y_batch))
+    return mini_batch

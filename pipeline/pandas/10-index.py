@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-
 '''
-This module sets index
+Sets the Timestamp column as the index of the dataframe.
 '''
 
 
 def index(df):
-    '''
-    This fumction does same thing like above
-    '''
+    """
+    Sets the Timestamp column as the index of the dataframe.
+    """
+    # Use set_index to move 'Timestamp' to the index
+    # Note: set_index returns a new DataFrame by default
     df = df.set_index('Timestamp')
     return df

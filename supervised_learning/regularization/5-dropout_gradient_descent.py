@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
-
-'''
-Doc
-'''
+"""Gradient Descent with Dropout"""
 import numpy as np
 
 
 def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
-    '''
-    Doc
-    '''
+    """This function updates the weights of a neural network
+     with Dropout regularization using gradient descent"""
+    dZ = cache.get("A{}".format(L)) - Y
     m = Y.shape[1]
 
-    dZ = cache[f"A{L}"] - Y
+    for i in reversed(range(1, L + 1)):
+        A_prev = cache["A{}".format(i - 1)]
+        W = weights["W{}".format(i)]
 
-    for layer in range(L, 0, -1):
-        W_curr = weights[f"W{layer}"]
-        A_prev = cache[f"A{layer - 1}"]
-        dW = (1 / m) * np.dot(dZ, A_prev.T)
-        db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-        weights[f"W{layer}"] = W_curr - alpha * dW
-        weights[f"b{layer}"] -= alpha * db
-        if layer > 1:
-            dA_prev = np.dot(W_curr.T, dZ)
-            dA_prev *= cache[f"D{layer - 1}"]
-            dA_prev /= keep_prob
-            dZ = dA_prev * (1 - cache[f"A{layer - 1}"] ** 2)
+        dW = (dZ @ A_prev.T) / m
+        db = np.sum(dZ, axis=1, keepdims=True) / m
+
+        if i > 1:
+            dA_prev = W.T @ dZ
+            D_prev = cache["D{}".format(i - 1)]
+            dA_prev = dA_prev * D_prev / keep_prob
+            dZ = dA_prev * (1 - A_prev ** 2)
+
+        weights["W{}".format(i)] -= alpha * dW
+        weights["b{}".format(i)] -= alpha * db

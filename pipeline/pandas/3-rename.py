@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-
 '''
-This module converts and renames Timestamp column
+function that takes DataFrame as an input, and renames one column, converts
+timestamp to datetime and shows only 2 columns
 '''
 import pandas as pd
 
 
 def rename(df):
     '''
-    This function loads data with delimiter
+    df is DataFrame
+    return will be modified df
     '''
-    df = df.rename(columns={"Timestamp": "Datetime"})
-    df["Datetime"] = pd.to_datetime(df["Datetime"], unit='s')
-    new_df = df[['Datetime', 'Close']]
-    return new_df
+    df = df.rename(columns={'Timestamp': 'Datetime'})
+    df['Datetime'] = pd.to_datetime(df['Datetime'], unit='s')
+    return df[['Datetime', 'Close']]

@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
-import numpy as np
+"""
+Calculates the weighted moving average of a data set:
+"""
 
 
 def moving_average(data, beta):
-    '''
-    Doc
-    '''
-    v = 0
-    moving_average = []
+    """
+    a function that calculates the weighted moving average of a data set
+    :param data: the list of data to calculate the moving average of
+    :param beta: the weight used for the moving average
+    :return: a list containing the moving averages of data
+    """
+    if beta > 1 or beta < 0:
+        return None
+    vt = 0
+    moving = []
     for i in range(len(data)):
-        v = beta * v + (1 - beta) * data[i]
-        v_corrected = v / (1 - beta ** (i + 1))
-        moving_average.append(v_corrected)
-    return moving_average
+        # Moving average: Vt = beta * Vt-1 + (1 - beta) * data[i]
+        vt = beta * vt + (1 - beta) * data[i]
+        # Correction of bias: vt / (1 - beta)
+        correction = 1 - beta ** (i + 1)
+        moving.append(vt / correction)
+    return moving

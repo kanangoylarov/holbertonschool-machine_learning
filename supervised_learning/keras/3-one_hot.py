@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-
-'''
-Documented
-'''
+"""
+Converts a label vector into a one-hot matrix
+"""
 import tensorflow.keras as K
 
 
 def one_hot(labels, classes=None):
-    '''
-    Doc
-    '''
-    return K.utils.to_categorical(labels, num_classes=classes)
+    """
+    a function that converts a label vector into a one-hot matrix
+    :param labels: label vector
+    :param classes: classes for the one-hot matrix
+    :return: the one-hot matrix
+    """
+    oh_encode = K.utils.to_categorical(labels, num_classes=classes)
+    return oh_encode
